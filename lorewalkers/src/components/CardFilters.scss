@@ -1,0 +1,41 @@
+.card-detail-filters > select {
+    margin-right: 1.5rem;
+}
+
+.card-set-filter {
+    width: auto;
+}
+
+
+.class-filters {
+    margin: 25px 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.class-filter-btn {
+    display: flex;
+    align-items: center;
+
+    & > input[type='checkbox'] {
+        display: none;
+    }
+
+    & > label {
+        padding: 10px 20px;
+        color: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: 0.3s;
+        opacity: 0.5;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    & > input[type='checkbox']:checked + label {
+        opacity: 1;
+    }
+}
