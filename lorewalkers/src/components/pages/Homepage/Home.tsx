@@ -19,10 +19,11 @@ function Home() {
           const data = await response.json();
       
           // TODO - Figure out the best way to filter out dupes.
-          const filteredResponseData = data.slice(0, 50).filter((card: any) => {
+          const filteredResponseData = data.slice(0,200).filter((card: any) => {
             return hsSets.some((set) => set.name === card.set); // Remove unnecessary sets
           });
-      
+          
+          console.log('fdata', filteredResponseData)
           setBaseCardData(filteredResponseData);
           setFilteredCardData(filteredResponseData);
         } catch (error) {
@@ -31,15 +32,24 @@ function Home() {
       }
 
     const handleFiltersChange = (
-        selectedRarity: string, 
-        selectedSet: string, 
+        selectedRarity: string | null, 
+        selectedSet: string | null, 
         selectedClasses: Array<string>
     ) => {
-        setFilteredCardData((prevCardData) => {
-            const newData = [...baseCardData].filter((card) => {
-                  return card.rarity === selectedRarity;
-                });
-            return newData;
+
+        setFilteredCardData(() => {
+             return baseCardData
+                .filter((card) => {
+                    return selectedRarity ? selectedRarity === card.rarity : true;
+                })
+                .filter((card) => {
+                    return selectedSet ? selectedSet && selectedSet === card.set : true;
+                })
+                .filter((card) => {
+                    return selectedClasses?.length > 0 
+                    ? selectedClasses?.includes(card.cardClass)
+                    : true;
+                })
         });
     }
 
