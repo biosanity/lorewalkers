@@ -18,6 +18,7 @@ function CardFilters({ onFiltersChange }: any) {
         onFiltersChange(selectedRarity, event.target.value, selectedClasses);
     }
 
+    // TODO - Find a way to incorporate multi-class cards filtering.
     const handleClassChange = (className: any) => {
         const updatedClasses = selectedClasses.includes(className)
         ? selectedClasses.filter((item) => item !== className)

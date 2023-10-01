@@ -1,27 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CardList.scss';
+import LoadingSpinner from './LoadingSpinner';
 
 function CardList({ data }: any) {
     const [sortBy, setSortBy] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     const sortCards = (property: string) => {
         const sortedCards = [...data];
-
-        if (!property) { return sortedCards }
-
-        sortedCards.sort((a, b) => {
-            if (a[property] < b[property]) {
-                return -1;
-            }
-            if (a[property] > b[property]) {
-                return 1;
-            }
-            return 0;
-        });
-
+    
+        if (!property) {
+            return sortedCards;
+        }
+    
+        if (property === 'rarity') {
+            sortedCards.sort((a, b) => {
+                const rarityOrder = ["FREE", "COMMON", "RARE", "EPIC", "LEGENDARY"];
+                const rarityA = rarityOrder.indexOf(a[property]);
+                const rarityB = rarityOrder.indexOf(b[property]);
+    
+                if (rarityA < rarityB) {
+                    return -1;
+                }
+                if (rarityA > rarityB) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else {
+            sortedCards.sort((a, b) => {
+                if (a[property] < b[property]) {
+                    return -1;
+                }
+                if (a[property] > b[property]) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+    
         return sortedCards;
-    };
-
+    };    
 
     return (
         <div>
@@ -35,20 +54,28 @@ function CardList({ data }: any) {
                     <option value='' selected>None</option>
                     <option value='name'>Name</option>
                     <option value='cost'>Mana Cost</option>
-                    {/* FIX RARITY TO SHOW IN ORDER COMMON/RARE/EPIC/LEGENDARY */}
                     <option value='rarity'>Rarity</option> 
                 </select>
             </div>
             <div className='hs-card-img-container'>
                 {sortCards(sortBy)
                     .map((card: any) => (
-                        <img
-                            key={card.id}
-                            className='hs-card'
-                            src={
-                                `https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`
-                            }
-                        />
+                        <div className="hs-card-wrapper" key={card.id}>
+                            <LoadingSpinner isLoading={isLoading} />
+                            <div style={{display: isLoading ? "none" : "block"}}>
+                                <a href="#">
+                                    <img
+                                        className="hs-card"
+                                        onLoad={() => setTimeout(() => {
+                                            setIsLoading(false)
+                                        }, 3000)}
+                                        src={
+                                            `https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`
+                                        }
+                                    />
+                                </a>
+                            </div>
+                        </div>
                     ))}
             </div>
         </div>  
