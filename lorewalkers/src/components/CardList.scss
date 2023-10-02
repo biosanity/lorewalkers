@@ -7,6 +7,13 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.hs-card-wrapper {
+    width: 260px;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .hs-card {
     object-fit: cover;

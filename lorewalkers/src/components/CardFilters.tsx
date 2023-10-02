@@ -4,44 +4,53 @@ import './CardFilters.scss';
 import { hsClasses, hsSets, hsRarity } from '../utils/card-details';
 
 function CardFilters({ onFiltersChange }: any) {
-    const [selectedRarity, setSelectedRarity] = useState('None');
-    const [selectedSet, setSelectedSet] = useState('None');
+    const [selectedRarity, setSelectedRarity] = useState('');
+    const [selectedSet, setSelectedSet] = useState('');
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     
-const handleRarityChange = (event: any) => {
-    setSelectedRarity(event.target.value);
-    onFiltersChange(event.target.value, selectedSet, setSelectedClasses);
-}
+    const handleRarityChange = (event: any) => {
+        setSelectedRarity(event.target.value);
+        onFiltersChange(event.target.value, selectedSet, selectedClasses);
+    }
 
-const handleSetChange = (event: any) => {
-    setSelectedSet(event.target.value);
-    onFiltersChange(selectedRarity, event.target.value, setSelectedClasses);
-}
+    const handleSetChange = (event: any) => {
+        setSelectedSet(event.target.value);
+        onFiltersChange(selectedRarity, event.target.value, selectedClasses);
+    }
 
-const handleClassChange = (className: any) => {
-    const updatedClasses = selectedClasses.includes(className)
-      ? selectedClasses.filter((item) => item !== className)
-      : [...selectedClasses, className];
+    // TODO - Find a way to incorporate multi-class cards filtering.
+    const handleClassChange = (className: any) => {
+        const updatedClasses = selectedClasses.includes(className)
+        ? selectedClasses.filter((item) => item !== className)
+        : [...selectedClasses, className];
 
-    setSelectedClasses(updatedClasses);
-    onFiltersChange(selectedRarity, selectedSet, updatedClasses);
-  };
+        setSelectedClasses(updatedClasses);
+        onFiltersChange(selectedRarity, selectedSet, updatedClasses);
+    };
 
     return (
        <div className="card-filters">
             <div className="card-detail-filters">
                 <label>Rarity:</label>
-                <select className="card-rarity-filter" onChange={(e) => handleRarityChange(e)}>
-                    <option selected>None</option>
+                <select 
+                    className="card-rarity-filter" 
+                    defaultValue=""
+                    onChange={(e) => handleRarityChange(e)}
+                >
+                    <option value="">None</option>
                     {hsRarity.map((item: any, index:number) => (
                         <option key={index} value={item.name}>{item.label}</option>
                     ))}
                 </select>
                 <label>Set:</label>
-                <select className="card-set-filter" onChange={(e) => handleSetChange(e)}>
-                    <option selected>None</option>
+                <select 
+                    className="card-set-filter" 
+                    defaultValue=""
+                    onChange={(e) => handleSetChange(e)}
+                >
+                    <option value="">None</option>
                     {hsSets.map((item: any, index:number) => (
-                        <option key={index}>{item.label}</option>
+                        <option key={index} value={item.name}>{item.label}</option>
                     ))}
                 </select>
             </div>
