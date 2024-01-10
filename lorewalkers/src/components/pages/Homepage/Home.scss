@@ -1,5 +1,5 @@
 .homepage {
-    margin: 0 6% 0 6%;
+    margin: 0 15% 0 15%;
 }
 
 .page-banner {
@@ -8,11 +8,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
 
     h1 {
-        font-size: 120px;
-        color: #171717;
+        font-size: 100px;
+        color: #111111;
         margin-bottom: 40px;
         text-shadow: #ffea3e -2px -2px 0px, #f78c15 2px -2px 0px, #f78c15 -2px 2px 0px, #f78c15 2px 2px 0px;
     }
@@ -27,10 +26,10 @@
         input[type='text'] {
             color: #fffeff;
             padding: 12px 14px 12px 72px;
-            font-size: 25px;
+            font-size: 20px;
             line-height: 1.25;
             width: calc(100% - 86px); // 100% minus left/right padding.
-            background-color:  #171717;
+            background-color:  #111111;
             box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.75);
             border-radius: 6px;
@@ -58,7 +57,7 @@
         width: 100%;
         z-index: 10;
         list-style: none;
-        background-color:  #171717;
+        background-color:  #111111;
         border: 1px solid rgba(255, 255, 255, 0.75);
         border-top: 0;
         border-radius: 6px;
@@ -71,10 +70,10 @@
                 padding: 15px 30px;
                 & > span {
                     line-height: 10px;
-                    font-size: 19px;
+                    font-size: 18px;
                 }
                 & > em {
-                    font-size: 14px;
+                    font-size: 13px;
                     opacity: 0.6;
                 }
             }
@@ -86,7 +85,7 @@
 
     .random-card-btn {
         display: flex;
-        margin-top: 20px;
+        margin-top: 25px;
         justify-content: center;
 
         > a {

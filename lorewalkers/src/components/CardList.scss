@@ -1,11 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/friz-quadrata-std');
 
 .hs-card-img-container {
-    margin-top: 25px;
+    margin-top: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 20px;
 }
 .hs-card-wrapper {
     width: 260px;
@@ -17,14 +18,14 @@
 
 .hs-card {
     object-fit: cover;
-    width: 260px;
-    height: 340px;
+    // width: 260px;
+    // height: 340px;
     transition: 0.3s;
 
     &:hover {
         z-index: 10;
-        transform: scale(1.15);
-        filter: drop-shadow(0px 0px 18px rgba(113, 247, 36, 0.925));
+        transform: scale(1.1);
+        filter: drop-shadow(0px 0px 16px rgba(113, 247, 36, 0.925));
     }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './CardList.scss';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -6,41 +6,36 @@ function CardList({ data }: any) {
     const [sortBy, setSortBy] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
-    const sortCards = (property: string) => {
-        const sortedCards = [...data];
-    
-        if (!property) {
-            return sortedCards;
+    const sortedCards = useMemo(() => {
+        console.log('use memo')
+        const cards = [...data];
+
+        if (!sortBy) {
+            return cards;
         }
-    
-        if (property === 'rarity') {
-            sortedCards.sort((a, b) => {
+
+        if (sortBy === 'rarity') {
+            cards.sort((a, b) => {
                 const rarityOrder = ["FREE", "COMMON", "RARE", "EPIC", "LEGENDARY"];
-                const rarityA = rarityOrder.indexOf(a[property]);
-                const rarityB = rarityOrder.indexOf(b[property]);
-    
-                if (rarityA < rarityB) {
-                    return -1;
-                }
-                if (rarityA > rarityB) {
-                    return 1;
-                }
-                return 0;
+                const rarityA = rarityOrder.indexOf(a[sortBy]);
+                const rarityB = rarityOrder.indexOf(b[sortBy]);
+
+                return rarityA - rarityB;
             });
         } else {
-            sortedCards.sort((a, b) => {
-                if (a[property] < b[property]) {
+            cards.sort((a, b) => {
+                if (a[sortBy] < b[sortBy]) {
                     return -1;
                 }
-                if (a[property] > b[property]) {
+                if (a[sortBy] > b[sortBy]) {
                     return 1;
                 }
                 return 0;
             });
         }
-    
-        return sortedCards;
-    };    
+
+        return cards;
+    }, [data, sortBy]);  
 
     return (
         <div>
@@ -58,28 +53,33 @@ function CardList({ data }: any) {
                 </select>
             </div>
             <div className='hs-card-img-container'>
-                {sortCards(sortBy)
+                {sortedCards
                     .map((card: any) => (
                         <div className="hs-card-wrapper" key={card.id}>
-                            <LoadingSpinner isLoading={isLoading} />
-                            <div style={{display: isLoading ? "none" : "block"}}>
+                            {/* <LoadingSpinner isLoading={isLoading} /> */}
+                            {/* {isLoading && <LoadingSpinner />} Show spinner while loading */}
+                            {/* <div style={{display: isLoading ? "none" : "block"}}> */}
+                            {/* <div> */}
                                 <a href="#">
                                     <img
                                         className="hs-card"
-                                        onLoad={() => setTimeout(() => {
-                                            setIsLoading(false)
-                                        }, 3000)}
+                                        // onLoad={() => setTimeout(() => {
+                                        //     setIsLoading(false)
+                                        // }, 3000)}
+                                        onLoad={() => setIsLoading(false)}
+                                        loading="lazy"
                                         src={
                                             `https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`
                                         }
+                                        
                                     />
                                 </a>
-                            </div>
+                            {/* </div> */}
                         </div>
                     ))}
             </div>
         </div>  
     )
   }
-  
-  export default CardList; 
+
+export default CardList; 
