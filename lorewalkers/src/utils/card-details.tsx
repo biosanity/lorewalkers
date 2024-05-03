@@ -48,7 +48,7 @@ export const hsSets = [
     { name: "RETURN_OF_THE_LICH_KING", label: "March of the Lich King" },
     { name: "PATH_OF_ARTHAS", label: "Path of Arthas" },
     { name: "BATTLE_OF_THE_BANDS", label: "Festival of Legends" },
-    { name: "TITANS", label: "" },
+    { name: "TITANS", label: "Titans" },
 ];
 
 export const hsRarity = [
