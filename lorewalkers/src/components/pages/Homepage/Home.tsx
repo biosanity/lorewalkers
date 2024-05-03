@@ -19,7 +19,7 @@ function Home() {
           const response = await fetch('https://api.hearthstonejson.com/v1/185749/enUS/cards.collectible.json');
           const data = await response.json();
           // TODO - Figure out the best way to filter out dupes.
-          const filteredResponseData = data.slice(0, 400).filter((card: any) => {
+          const filteredResponseData = data.filter((card: any) => {
             return hsSets.some((set) => set.name === card.set); // Remove unnecessary sets
           });
           setBaseCardData(filteredResponseData);
@@ -65,6 +65,7 @@ function Home() {
 
     useEffect(() => {
         fetchCardData();
+        console.log('home data', filteredCardData);
     }, [])
 
     return(
@@ -98,7 +99,7 @@ function Home() {
                         </ul>
                     }
                 </div>
-                <div className='random-card-btn'>
+                <div className='lw-btn'>
                     <a>
                         <span>Random Card</span>
                         <FontAwesomeIcon icon={faArrowsRotate} inverse />

@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import './CardList.scss';
-import LoadingSpinner from './LoadingSpinner';
+import CardImage from './CardImage';
+
+const imagePerRow = 30;
 
 function CardList({ data }: any) {
-    const [sortBy, setSortBy] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [sortBy, setSortBy] = useState(''); 
+    const [next, setNext] = useState(imagePerRow);
 
     const sortedCards = useMemo(() => {
-        console.log('use memo')
         const cards = [...data];
 
         if (!sortBy) {
@@ -37,6 +38,10 @@ function CardList({ data }: any) {
         return cards;
     }, [data, sortBy]);  
 
+    const handleMoreImage = () => {
+        setNext(next => Math.min(next + imagePerRow, sortedCards.length))
+    };
+
     return (
         <div>
             <h1>Cards ({data.length})</h1>
@@ -52,32 +57,27 @@ function CardList({ data }: any) {
                     <option value='rarity'>Rarity</option> 
                 </select>
             </div>
-            <div className='hs-card-img-container'>
-                {sortedCards
-                    .map((card: any) => (
-                        <div className="hs-card-wrapper" key={card.id}>
-                            {/* <LoadingSpinner isLoading={isLoading} /> */}
-                            {/* {isLoading && <LoadingSpinner />} Show spinner while loading */}
-                            {/* <div style={{display: isLoading ? "none" : "block"}}> */}
-                            {/* <div> */}
-                                <a href="#">
-                                    <img
-                                        className="hs-card"
-                                        // onLoad={() => setTimeout(() => {
-                                        //     setIsLoading(false)
-                                        // }, 3000)}
-                                        onLoad={() => setIsLoading(false)}
-                                        loading="lazy"
-                                        src={
-                                            `https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`
-                                        }
-                                        
-                                    />
-                                </a>
-                            {/* </div> */}
+            <div  className="hs-card-img-container">
+                {sortedCards?.slice(0, next)?.map((card) => {
+                    return (
+                        <div>
+                            <CardImage card={card} />
                         </div>
-                    ))}
+                    );
+                })}
             </div>
+
+            {sortedCards.length > next ? (
+                <div className='lw-btn'>
+                    <a onClick={handleMoreImage}>
+                        <span>Load More Images</span>
+                    </a>
+                </div>
+            ) : (
+                <div className='results-end-message'>
+                    <p>Job's Done!</p>
+                </div>
+            )}
         </div>  
     )
   }
